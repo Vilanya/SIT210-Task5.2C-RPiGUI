@@ -1,0 +1,54 @@
+import Tkinter as tk 
+import RPi.GPIO as GPIO
+from time import sleep
+
+GREEN = 14
+RED = 15
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(GREEN, GPIO.OUT)
+GPIO.setup(RED, GPIO.OUT)
+
+master = tk.Tk()
+master.title("GPIO Control")
+master.geometry("400x400")
+
+GREEN_state = True
+RED_State = True
+
+def GREENbutton():
+        global GREEN_state
+        if GREEN_state == True:
+                GPIO.output(GREEN, GREEN_state)
+                GREEN_state = False
+                GREENlabel = tk.Label(master, text="Turned ON", fg="green")
+                GREENlabel.grid(row=0, column=1)
+        else:
+                GPIO.output(GREEN, GREEN_state)
+                GREEN_state = True
+                GREENlabel = tk.Label(master, text="Turned OFF", fg="red")
+                GREENlabel.grid(row=0, column=1)
+
+
+def REDbutton():
+        global RED_State
+        if RED_State == True:
+                GPIO.output(RED, RED_State)
+                RED_State = False
+                REDlabel = tk.Label(master, text="Turned ON", fg="green")
+                REDlabel.grid(row=1, column=1)
+        else:
+                GPIO.output(RED, RED_State)
+                RED_State = True
+                REDlabel = tk.Label(master, text="Turned OFF", fg="red")
+                REDlabel.grid(row=1, column=1)
+
+GREENbutton = tk.Button(master, text="GREEN", bg="green", command= GREENbutton)
+GREENbutton.grid(row=0, column=0)
+
+REDbutton = tk.Button(master, text="RED",bg="red" , command=REDbutton)
+REDbutton.grid(row=1, column=0)
+
+EXITbutton = tk.Button(master, text="Exit",bg="yellow", command=master.destroy)
+EXITbutton.grid(row=2, column=0)
+master.mainloop()
